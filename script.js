@@ -332,6 +332,11 @@ function openScene(sceneName) {
     const scene = document.getElementById(sceneName);
     
     if (!scene) return;
+
+    // Prevent hidden home layer from intercepting taps
+    if (universeView) {
+        universeView.style.pointerEvents = 'none';
+    }
     
     // Switch to scene-specific music
     switchMusic(sceneName);
@@ -376,6 +381,7 @@ function closeScene() {
     
     setTimeout(() => {
         universeView.style.display = 'block';
+        universeView.style.pointerEvents = 'auto';
         setTimeout(() => {
             universeView.style.opacity = '1';
             universeView.style.transform = 'scale(1)';
