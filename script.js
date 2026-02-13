@@ -71,6 +71,7 @@ document.head.appendChild(style);
 
 let currentMusic = null;
 let homeMusic = null;
+let homeMusicPosition = 0;
 let musicInitialized = false;
 
 const sceneMusic = {
@@ -91,7 +92,8 @@ function initBackgroundMusic() {
 
 function startHomeMusic() {
     if (homeMusic && !currentMusic) {
-        // Resume from where it was paused
+        // Resume from saved position
+        homeMusic.currentTime = homeMusicPosition;
         homeMusic.volume = 0;
         homeMusic.play().then(() => {
             const fadeInInterval = setInterval(() => {
@@ -115,13 +117,13 @@ function switchMusic(sceneId) {
     
     // Stop home music if playing (preserve position)
     if (homeMusic && !homeMusic.paused) {
+        homeMusicPosition = homeMusic.currentTime; // Save position
         const fadeOutHome = setInterval(() => {
             if (homeMusic.volume > 0.05) {
                 homeMusic.volume = Math.max(0, homeMusic.volume - 0.05);
             } else {
                 homeMusic.volume = 0;
                 homeMusic.pause();
-                // Don't reset time - keep position for resume
                 clearInterval(fadeOutHome);
             }
         }, 30);
@@ -343,7 +345,7 @@ function closeScene() {
     
     if (!activeScene) return;
     
-    // Stop scene music and restart home music
+    // Stop scene music and resume home music
     if (currentMusic) {
         currentMusic.pause();
         currentMusic.currentTime = 0;
@@ -351,10 +353,10 @@ function closeScene() {
         currentMusic = null;
     }
     
-    // Restart home music
+    // Resume home music (wait for scene music to stop)
     setTimeout(() => {
         startHomeMusic();
-    }, 400);
+    }, 500);
     
     activeScene.classList.remove('active');
     
