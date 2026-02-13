@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ✨</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <h1 class="login-title">Enter to Explore ✨</h1>
+            <p class="login-subtitle">A little universe made just for you</p>
+            <form id="loginForm" class="login-form">
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    class="password-input" 
+                    placeholder="Enter password"
+                    autocomplete="off"
+                />
+                <button type="submit" class="login-button">Enter →</button>
+                <p id="errorMessage" class="error-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="musicReasons" loop>
+        <source src="Burna_Boy_Ft_Ed_Sheeran_-_For_My_Hand.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="musicNight" loop>
+        <source src="Sauti-Sol-Isabella-(TunezJam.com).mp3" type="audio/mpeg">
+    </audio>
+    <audio id="musicSpecial" loop>
+        <source src="nyashinski_perfect_design_official_music_video_mp3_27934.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="musicSurprise" loop>
+        <source src="Andy Bumuntu - On Fire (Prod. Flyest music).mp3" type="audio/mpeg">
+    </audio>
+    <audio id="musicLetter" loop>
+        <source src="nyashinski_malaika_official_music_video_mp3_78578.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Animated Background Universe -->
+    <div class="universe-background">
+        <div class="gradient-sky"></div>
+        <canvas id="particleCanvas"></canvas>
+        <div class="shooting-stars">
+            <div class="shooting-star" style="--delay: 2s; --duration: 1.5s; --top: 20%;"></div>
+            <div class="shooting-star" style="--delay: 5s; --duration: 1.8s; --top: 40%;"></div>
+            <div class="shooting-star" style="--delay: 8s; --duration: 1.3s; --top: 60%;"></div>
+            <div class="shooting-star" style="--delay: 12s; --duration: 1.6s; --top: 30%;"></div>
+            <div class="shooting-star" style="--delay: 15s; --duration: 1.4s; --top: 70%;"></div>
+        </div>
+    </div>
+
+    <!-- Parallax Layers -->
+    <div class="parallax-layer layer-back"></div>
+    <div class="parallax-layer layer-mid"></div>
+    <div class="parallax-layer layer-front"></div>
+
+    <!-- Floating Universe Objects -->
+    <div id="universeView" class="universe-container">
+        <!-- Instruction Text -->
+        <div class="universe-instruction">
+            <p>click each for a surprise ✨</p>
+        </div>
+        
+        <!-- Floating Interactive Elements -->
+        <div class="floating-object obj-1" data-scene="why-i-like-you" style="--x: 18%; --y: 25%; --delay: 0s; --duration: 8s;">
+            <div class="object-glow"></div>
+            <div class="object-content">
+                <span class="object-icon">💖</span>
+                <span class="object-label">All The Reasons Why</span>
+            </div>
+        </div>
+
+        <div class="floating-object obj-2" data-scene="late-night" style="--x: 82%; --y: 20%; --delay: 1.5s; --duration: 10s;">
+            <div class="object-glow"></div>
+            <div class="object-content">
+                <span class="object-icon">🌙</span>
+                <span class="object-label">3AM Musings</span>
+            </div>
+        </div>
+
+        <div class="floating-object obj-4" data-scene="special" style="--x: 85%; --y: 65%; --delay: 0.8s; --duration: 11s;">
+            <div class="object-glow"></div>
+            <div class="object-content">
+                <span class="object-icon">🌸</span>
+                <span class="object-label">Your Magic</span>
+            </div>
+        </div>
+
+        <div class="floating-object obj-5" data-scene="surprise" style="--x: 20%; --y: 70%; --delay: 3s; --duration: 7s;">
+            <div class="object-glow"></div>
+            <div class="object-content">
+                <span class="object-icon">🎁</span>
+                <span class="object-label">Something Special</span>
+            </div>
+        </div>
+
+        <div class="floating-object obj-6" data-scene="letter" style="--x: 50%; --y: 85%; --delay: 1s; --duration: 9.5s;">
+            <div class="object-glow"></div>
+            <div class="object-content">
+                <span class="object-icon">💌</span>
+                <span class="object-label">Sealed With Love</span>
+            </div>
+        </div>
+
+        <!-- Decorative Floating Elements -->
+        <div class="decorative-petal" style="--x: 12%; --y: 50%; --delay: 0s;"></div>
+        <div class="decorative-petal" style="--x: 88%; --y: 42%; --delay: 2s;"></div>
+        <div class="decorative-petal" style="--x: 55%; --y: 15%; --delay: 4s;"></div>
+        <div class="decorative-star" style="--x: 35%; --y: 30%; --delay: 1s;"></div>
+        <div class="decorative-star" style="--x: 65%; --y: 75%; --delay: 3s;"></div>
+    </div>
+
+    <!-- Scene: Why I Like You -->
+    <div id="why-i-like-you" class="scene-container">
+        <button class="back-button">← Back</button>
+        <div class="scene-content">
+            <h1 class="scene-title">All The Reasons Why ✨</h1>
+            <div class="reasons-container">
+                <p class="reason-line" style="--delay: 0.3s;">✨ You turn ordinary moments into core memories</p>
+                <p class="reason-line" style="--delay: 0.8s;">💫 Your laugh is literally my favorite soundtrack</p>
+                <p class="reason-line" style="--delay: 1.3s;">🌟 You're beautiful in a way that makes art jealous</p>
+                <p class="reason-line" style="--delay: 1.8s;">💕 You make the chaos feel like home</p>
+                <p class="reason-line" style="--delay: 2.3s;">🌸 Being with you feels like the universe saying "yes"</p>
+                <p class="reason-line" style="--delay: 2.8s;">✨ You find wonder where others see ordinary</p>
+            </div>
+        </div>
+        <div class="scene-particles"></div>
+    </div>
+
+    <!-- Scene: Late Night Thoughts -->
+    <div id="late-night" class="scene-container night-theme">
+        <button class="back-button">← Back</button>
+        <div class="scene-content">
+            <h1 class="scene-title">3AM Musings 🌙</h1>
+            <div class="thoughts-container">
+                <p class="typewriter-text">
+                    You know those 3AM thoughts when the world goes quiet and you're left with the truth? 
+                    Mine are always about you. About how your whole face changes when you talk about something you love. 
+                    About how your laugh feels like coming home after a long day. 
+                    About how being around you is easy in a way nothing else is. 
+                    You're the warmth in cold nights, the calm in the chaos, the reason sleepless nights don't feel so bad anymore.
+                </p>
+            </div>
+        </div>
+        <div class="stars-container"></div>
+    </div>
+
+    <!-- Scene: What Makes You Special -->
+    <div id="special" class="scene-container">
+        <button class="back-button">← Back</button>
+        <div class="scene-content">
+            <h1 class="scene-title">Your Magic 🌸</h1>
+            <div class="special-cards">
+                <div class="special-card" style="--delay: 0.2s;">
+                    <div class="card-icon">✨</div>
+                    <h3>That Heart of Gold</h3>
+                    <p>You love people in a way that makes them feel seen, heard, and valued—no strings attached, no ego involved</p>
+                </div>
+                <div class="special-card" style="--delay: 0.4s;">
+                    <div class="card-icon">😊</div>
+                    <h3>That Smile Though</h3>
+                    <p>It's contagious, it's radiant, and honestly? It should come with a warning label because it makes everything suddenly okay</p>
+                </div>
+                <div class="special-card" style="--delay: 0.6s;">
+                    <div class="card-icon">🧠</div>
+                    <h3>That Beautiful Mind</h3>
+                    <p>The way you think is different—creative, curious, deep. You think of the most surprising, funny things, making everything entertaining and exciting.</p>
+                </div>
+                <div class="special-card" style="--delay: 0.8s;">
+                    <div class="card-icon">💝</div>
+                    <h3>That Energy</h3>
+                    <p>A moment with you is never dull,a phone call can span hours endless fun which is not common with many,</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scene: Surprise -->
+    <div id="surprise" class="scene-container">
+        <button class="back-button">← Back</button>
+        <div class="scene-content">
+            <h1 class="scene-title">Something Special 🎁</h1>
+            <div class="surprise-container">
+                <button id="surpriseButton" class="surprise-button">
+                    <span class="button-icon">🎁</span>
+                    <span class="button-text">Click Me! ✨</span>
+                </button>
+                <div id="surpriseMessage" class="surprise-message">
+                    <img src="maggie.png" alt="Surprise" class="surprise-image">
+                    <p class="surprise-text">hii nayo nlikuambia sitawai itupa. 😏</p>
+
+                </div>
+            </div>
+        </div>
+        <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+    </div>
+
+    <!-- Scene: Letter -->
+    <div id="letter" class="scene-container">
+        <button class="back-button">← Back</button>
+        <div class="scene-content">
+            <div class="letter-paper">
+                <div class="letter-content">
+                    <p class="letter-greeting">Hey You,</p>
+                    
+                    <p class="letter-paragraph">
+                        So I built this whole little universe for you. I know it's kind of extra, but honestly? 
+                        When have I ever done anything halfway when it comes to you?
+                    </p>
+                    
+                    <p class="letter-paragraph">
+                        Every floating bubble, every animation, every ridiculous detail—it's all just me trying to say: 
+                        you matter. Like, a lot. In ways that make me want to build digital universes at midnight 
+                        and hope that somehow it shows you even a fraction of what you mean to me.
+                    </p>
+                    
+                    <p class="letter-paragraph">
+                        Thank you for being exactly who you are—weird, wonderful, perfectly imperfect. 
+                        Thank you for making existence feel less like existence and more like actually living. 
+                        You're the plot twist I never saw coming and the happy ending I always hoped for.
+                    </p>
+                    
+                    <p class="letter-closing">
+                        — Built with caffeine, code, and way too many feelings 💕
+                    </p>
+                    
+                    <p class="letter-signature">nania 💖</p>
+                    
+                    <div class="letter-heart">💕</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
