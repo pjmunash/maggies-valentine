@@ -91,6 +91,7 @@ function initBackgroundMusic() {
 
 function startHomeMusic() {
     if (homeMusic && !currentMusic) {
+        // Resume from where it was paused
         homeMusic.volume = 0;
         homeMusic.play().then(() => {
             const fadeInInterval = setInterval(() => {
@@ -112,7 +113,7 @@ function switchMusic(sceneId) {
     const newMusic = document.getElementById(musicId);
     if (!newMusic) return;
     
-    // Stop home music if playing
+    // Stop home music if playing (preserve position)
     if (homeMusic && !homeMusic.paused) {
         const fadeOutHome = setInterval(() => {
             if (homeMusic.volume > 0.05) {
@@ -120,7 +121,7 @@ function switchMusic(sceneId) {
             } else {
                 homeMusic.volume = 0;
                 homeMusic.pause();
-                homeMusic.currentTime = 0;
+                // Don't reset time - keep position for resume
                 clearInterval(fadeOutHome);
             }
         }, 30);
