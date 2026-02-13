@@ -86,6 +86,12 @@ function initBackgroundMusic() {
     homeMusic = document.getElementById('musicHome');
     if (homeMusic) {
         homeMusic.volume = 0.7;
+        homeMusic.addEventListener('timeupdate', () => {
+            homeMusicPosition = homeMusic.currentTime;
+        });
+        homeMusic.addEventListener('pause', () => {
+            homeMusicPosition = homeMusic.currentTime;
+        });
     }
     musicInitialized = true;
 }
@@ -93,7 +99,15 @@ function initBackgroundMusic() {
 function startHomeMusic() {
     if (homeMusic && !currentMusic) {
         // Resume from saved position
-        homeMusic.currentTime = homeMusicPosition;
+        if (homeMusicPosition > 0) {
+            if (homeMusic.readyState >= 1) {
+                homeMusic.currentTime = homeMusicPosition;
+            } else {
+                homeMusic.addEventListener('loadedmetadata', () => {
+                    homeMusic.currentTime = homeMusicPosition;
+                }, { once: true });
+            }
+        }
         homeMusic.volume = 0;
         homeMusic.play().then(() => {
             const fadeInInterval = setInterval(() => {
