@@ -38,6 +38,8 @@ function initLogin() {
             // Remove login screen after animation
             setTimeout(() => {
                 loginScreen.style.display = 'none';
+                // Start home music after login
+                startHomeMusic();
             }, 800);
         } else {
             // Wrong password
@@ -68,6 +70,7 @@ document.head.appendChild(style);
 // ================================
 
 let currentMusic = null;
+let homeMusic = null;
 let musicInitialized = false;
 
 const sceneMusic = {
@@ -79,8 +82,27 @@ const sceneMusic = {
 };
 
 function initBackgroundMusic() {
-    // Music will start when first scene is opened
+    homeMusic = document.getElementById('musicHome');
+    if (homeMusic) {
+        homeMusic.volume = 0.7;
+    }
     musicInitialized = true;
+}
+
+function startHomeMusic() {
+    if (homeMusic && !currentMusic) {
+        homeMusic.volume = 0;
+        homeMusic.play().then(() => {
+            const fadeInInterval = setInterval(() => {
+                if (homeMusic.volume < 0.65) {
+                    homeMusic.volume = Math.min(0.7, homeMusic.volume + 0.05);
+                } else {
+                    homeMusic.volume = 0.7;
+                    clearInterval(fadeInInterval);
+                }
+            }, 50);
+        }).catch(err => console.log('Home music play failed:', err));
+    }
 }
 
 function switchMusic(sceneId) {
@@ -90,9 +112,18 @@ function switchMusic(sceneId) {
     const newMusic = document.getElementById(musicId);
     if (!newMusic) return;
     
-    // Initialize music system if not already done
-    if (!musicInitialized) {
-        musicInitialized = true;
+    // Stop home music if playing
+    if (homeMusic && !homeMusic.paused) {
+        const fadeOutHome = setInterval(() => {
+            if (homeMusic.volume > 0.05) {
+                homeMusic.volume = Math.max(0, homeMusic.volume - 0.05);
+            } else {
+                homeMusic.volume = 0;
+                homeMusic.pause();
+                homeMusic.currentTime = 0;
+                clearInterval(fadeOutHome);
+            }
+        }, 30);
     }
     
     // If same music, just ensure it's playing
@@ -311,13 +342,18 @@ function closeScene() {
     
     if (!activeScene) return;
     
-    // Stop music immediately when returning home
+    // Stop scene music and restart home music
     if (currentMusic) {
         currentMusic.pause();
         currentMusic.currentTime = 0;
         currentMusic.volume = 1; // Reset volume for next play
         currentMusic = null;
     }
+    
+    // Restart home music
+    setTimeout(() => {
+        startHomeMusic();
+    }, 400);
     
     activeScene.classList.remove('active');
     

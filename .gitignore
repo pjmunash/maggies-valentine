@@ -1,2 +1,3 @@
 # Exclude music files
 *.mp3
+!tell_me_one_lie.mp3
