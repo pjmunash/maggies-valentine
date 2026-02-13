@@ -1181,3 +1181,12 @@ html {
     background: rgba(255, 182, 193, 0.4);
     color: #4A4A4A;
 }
+
+/* Mobile: Disable animations for easier interaction */
+@media (max-width: 768px) {
+    .floating-object,
+    .scene-icon,
+    .letter-icon {
+        animation: none !important;
+    }
+}
